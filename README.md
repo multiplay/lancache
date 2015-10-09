@@ -96,8 +96,8 @@ lancache-sony = 10.10.100.105
 
 ## Stats
 For those that are interested in stats @ [Insomnia 55](https://insomniagamingfestival.com/) LANcache 
-Processed 12.3 million downloads from the internet totalling 4.8TB
-Served 105.1 million downloads totalling 44.7TB to the LAN
-Peaked at 8Gbps to the LAN
+* Processed 12.3 million downloads from the internet totalling 4.8TB
+* Served 105.1 million downloads totalling 44.7TB to the LAN
+* Peaked at 8Gbps to the LAN
 
 For more information and discussion see [our blog](http://blog.multiplay.co.uk/2014/04/lancache-dynamically-caching-game-installs-at-lans-using-nginx/).
