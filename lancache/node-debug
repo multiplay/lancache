@@ -1,0 +1,12 @@
+# Debug Node
+include lancache/resolver;
+log_subrequest on;
+
+location / {
+	range_cacheable_size 100;
+	proxy_set_header Range $range_cacheable_range;
+	proxy_hide_header Etag;
+	proxy_cache_key "$server_name$uri $range_cacheable_range";
+	proxy_cache_valid 206 90d;
+	include lancache/cache-installs;
+}

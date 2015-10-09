@@ -1,0 +1,20 @@
+# Origin Node
+include lancache/resolver;
+
+# Origin downloader:
+# * Blocks caching so we have to ignore Expires and Cache-Control.
+# * Puts sauth=<authkey> in the query string so we use $uri instead of $request_uri
+#   in the cache key.
+# * Uses a single archive file with random range requests.
+#   To combat this we use proxy_cachable_range instead of http_range which rewrites
+#   the ranges so they are predicable.
+# * Mainly uses 16777216 byte requests.
+location / {
+	proxy_ignore_headers Expires Cache-Control;
+	range_cacheable_size 16777216;
+	proxy_set_header Range $range_cacheable_range;
+	proxy_hide_header Etag;
+	proxy_cache_key "$server_name$uri $range_cacheable_range";
+	proxy_cache_valid 206 90d;
+	include lancache/cache-installs;
+}

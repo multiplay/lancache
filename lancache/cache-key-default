@@ -1,0 +1,1 @@
+proxy_cache_key "$server_name$request_uri";

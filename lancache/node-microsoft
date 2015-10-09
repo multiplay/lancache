@@ -1,0 +1,34 @@
+# Microsoft Node
+include lancache/resolver;
+
+# Xbox One downloader:
+# * Uses a single archive file with range requests.
+# * Uses redirects sometimes to push off to 3rd party CDNs.
+# * Mainly uses 696320 byte requests but overlaps quite a bit
+#   so we use double that.
+
+# Ensure we don't cache redirects to 3rd party CDNs
+error_page 301 302 307 = @redirect;
+recursive_error_pages on;
+proxy_intercept_errors on;
+
+proxy_hide_header Etag;
+proxy_cache_key "$server_name$request_uri $range_cacheable_range";
+proxy_cache_valid 206 90d;
+range_cacheable_size 1392640;
+
+location / {
+	# proxy_set_header directives aren't merged so must be here
+	proxy_set_header Range $range_cacheable_range;
+	include lancache/cache-installs;
+}
+
+# Process a redirect and cache the response
+location @redirect {
+	# proxy_set_header directives aren't merged so must be here
+	proxy_set_header Range $range_cacheable_range;
+	include lancache/cache-installs-base;
+	# We need to copy the variable as it's not available after the pass starts
+	set $location $upstream_http_location;
+	proxy_pass $location;
+}

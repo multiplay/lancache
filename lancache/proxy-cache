@@ -1,0 +1,35 @@
+# Proxy Cache
+include lancache/proxy-base;
+
+# Only download one copy at a time and use a large timeout so
+# this really happens, otherwise we end up wasting bandwith
+# getting the file multiple times.
+proxy_cache_lock on;
+proxy_cache_lock_timeout 1h;
+
+# Allow the use of state entries
+proxy_cache_use_stale error timeout invalid_header updating http_500 http_502 http_503 http_504;
+
+# Allow caching of 200 but not 301 or 302 as our cache key may not include query params
+# hence may not be valid for all users
+proxy_cache_valid 200 90d;
+proxy_cache_valid 301 302 0;
+
+# Enable cache revalidation
+proxy_cache_revalidate on;
+
+# By-pass with nocache=1
+proxy_cache_bypass $arg_nocache;
+
+# 40G max file
+proxy_max_temp_file_size 40960m;
+
+# Purging
+#
+# Commercial subscription method:
+# * Triggers off the HTTP header X-Cache-Purge
+#proxy_cache_purge $http_x_cache_purge;
+#
+# ngx_cache_purge method:
+# * Triggers off the HTTP method PURGE
+proxy_cache_purge PURGE from all;

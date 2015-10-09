@@ -1,0 +1,11 @@
+# Use range rewrites to fix random ranges
+
+error_page 418 = @rangeproxy;
+
+if ($http_range = "") {
+	set $http_x_range_original "na";
+}
+
+if ($http_x_range_original = "") {
+	return 418;
+}

@@ -1,0 +1,4 @@
+set_real_ip_from 85.236.112.0/25;
+set_real_ip_from 10.10.1.0/24;
+set_real_ip_from 127.0.0.1;
+set_real_ip_from unix:;

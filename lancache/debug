@@ -1,0 +1,5 @@
+allow 85.236.113.73;
+allow 85.236.112.0/25;
+allow 127.0.0.1;
+deny all;
+log_subrequest on;

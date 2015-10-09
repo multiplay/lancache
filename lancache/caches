@@ -1,0 +1,4 @@
+# Caches
+proxy_cache_path /data/www/cache/installs levels=2:2 keys_zone=installs:4096m inactive=120d max_size=5767168m loader_files=1000 loader_sleep=50ms loader_threshold=300ms;
+proxy_cache_path /data/www/cache/other levels=2:2 keys_zone=other:100m inactive=72h max_size=10240m;
+proxy_temp_path /data/www/cache/tmp;

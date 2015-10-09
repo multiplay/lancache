@@ -1,0 +1,28 @@
+# Steam Node
+include lancache/resolver;
+
+location /depot/ {
+	# Currently Steam uses a default expires of now, but does set
+	# Cache-Control when required so just ignore Expires header for
+	# now.
+	proxy_ignore_headers Expires;
+
+	# Steam sometimes passes security parameters on the URI so we
+	# cache based on just the URI excluding the query string
+	proxy_cache_key "$server_name$uri";
+	include lancache/cache-installs;
+}
+
+# Store results from /serverlist/ request as they should allow us to
+# determine if we are missing an DNS entries for content servers
+location /serverlist/ {
+	proxy_store /data/www/cache/steam$uri/servers.txt;
+	proxy_store_access user:rw group:rw all:r;
+	include lancache/proxy-base;
+	proxy_pass http://$host$request_uri;
+}
+
+location / {
+	include lancache/cache-key-default;
+	include lancache/cache-other;
+}       

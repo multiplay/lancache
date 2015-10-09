@@ -1,0 +1,46 @@
+#!/usr/bin/perl -w
+
+use strict;
+use POSIX qw(ceil);
+
+my $chunksize = 2785280;
+
+sub syntax()
+{
+	print "$0 <url>\n";
+}
+
+{
+    if ($#ARGV == -1) {
+	    syntax();
+	    exit 1;
+    }
+
+    my $request = $ARGV[0];
+    if (!$request) {
+	    syntax();
+	    exit 2;
+    }
+
+    my @output = `curl -s -H "Range: bytes=0-0" -D - "$request" | grep Content-Range`;
+    if ($#output != 0 || $output[0] !~ /Content-Range: bytes 0-0\/(\d+)/) {
+	    print STDERR "Invalid response:", @output;
+	    exit 3;
+    }
+    my $end = $1 - 1;
+    my $from = 0;
+    my $to = ($chunksize > $end) ? $end : $chunksize - 1;
+    my $chunks = ceil($end / $chunksize);
+    my $i = 0;
+    while ($to < $end) {
+	    print qq{echo "Chunk $i of $chunks"\n};
+	    print qq{curl --progress-bar -H "Range: bytes=$from-$to" "$request" > /dev/null\n};
+
+	    $i++;
+	    $from = $to + 1;
+	    $to += $chunksize;
+	    if ($to > $end) {
+		    $to = $end;
+	    }
+    }
+}

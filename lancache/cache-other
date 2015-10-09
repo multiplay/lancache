@@ -1,0 +1,3 @@
+proxy_cache other;
+include lancache/proxy-cache;
+proxy_pass http://$host$request_uri;
