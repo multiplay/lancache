@@ -1,1 +1,1 @@
-log_format main '$remote_addr - $remote_user [$time_local] "$request" $status $body_bytes_sent "$http_referer" "$http_user_agent" "$upstream_cache_status" "$host" "$http_range" "$range_cacheable_range" "$request_time" "$upstream_response_time"';
+log_format main '$remote_addr - $remote_user [$time_local] "$request" $status $body_bytes_sent "$http_referer" "$http_user_agent" "$upstream_cache_status" "$host" "$http_range" "$range_cache_range" "$request_time" "$upstream_response_time"';

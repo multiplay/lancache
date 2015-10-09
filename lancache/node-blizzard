@@ -8,10 +8,10 @@ include lancache/resolver;
 # * Mainly uses 1048576 byte requests but ranges overlap quite a bit so we use the
 #   same size as Origin.
 location / {
-	range_cacheable_size 16777216;
-	proxy_set_header Range $range_cacheable_range;
+	range_cache_size 16777216;
+	proxy_set_header Range $range_cache_range;
 	proxy_hide_header Etag;
-	proxy_cache_key "$server_name$request_uri $range_cacheable_range";
+	proxy_cache_key "$server_name$request_uri $range_cache_range";
 	proxy_cache_valid 206 90d;
 	include lancache/cache-installs;
 }
