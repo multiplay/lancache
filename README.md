@@ -75,7 +75,7 @@ Finally the catch all / entry caches all other items according to the their head
 This is the default which is used for riot, hirez and sony it uses standard caching rules which caches based on the `proxy_cache_key "$server_name$request_uri"`
 
 # Required DNS entries
-All of the required DNS entries are for each service are documented their block server in `machines/lancache-single.conf`.
+All of the required DNS entries are for each service are documented their block server in `sites/lancache-single.conf`.
 
 You’ll notice that each entry starts with `lancache-XXXX` this is entry used in the listen directive so no editing of the config is required for IP allocation to each service. As we’re creating multiple server entries and each is capturing hostnames using the `_` wildcard each service must have its own IP e.g.
 ```
