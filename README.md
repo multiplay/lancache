@@ -4,7 +4,7 @@ Dynamically Cache Game Installs at LAN’s using [Nginx](http://nginx.org/)
 # Requirements
 Due to the features used in this configuration it requires
 * [nginx 1.6.0+](http://nginx.org/).
-* range_cache module (unreleased watch this space)
+* [range_cache module](https://github.com/multiplay/nginx-range-cache)
 
 # Nginx Configuration
 In order to make the configuration more maintainable we’ve split the config up in to a number of smaller includes.
@@ -97,7 +97,7 @@ lancache-sony = 10.10.100.105
 * OS – [FreeBSD 10.1](https://www.freebsd.org/)
 
 ## Stats
-For those that are interested in stats @ [Insomnia 55](https://insomniagamingfestival.com/) LANcache 
+For those that are interested in stats @ [Insomnia 55](https://insomniagamingfestival.com/) LANcache
 * Processed 12.3 million downloads from the internet totalling 4.8TB
 * Served 105.1 million downloads totalling 44.7TB to the LAN
 * Peaked at 8Gbps to the LAN
